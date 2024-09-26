@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canvas Art</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #gameCanvas {
+      background-color: #87CEEB;
+      border: 2px solid #000;
+    }
+    #controls {
+      position: absolute;
+      top: 20px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="gameCanvas" width="600" height="400"></canvas>
+  <div id="controls">Press 1 for Red, 2 for Orange, 3 for Yellow, 4 for green, 5 for purple, 6 for gray, 7 for brown, 8 for blue/eraser</div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const gridSize = 20;  // Size of each block
+    const gridWidth = canvas.width / gridSize;
+    const gridHeight = canvas.height / gridSize;
+
+    let currentBlockType = 1;  // Default to dirt
+    let world = [];  // 2D array representing the world
+    
+    // Initialize the world with empty blocks (0 represents air)
+    for (let y = 0; y < gridHeight; y++) {
+      world[y] = [];
+      for (let x = 0; x < gridWidth; x++) {
+        world[y][x] = 0;  // 0 means air (empty block)
+      }
+    }
+
+    // Function to render the world
+    function renderWorld() {
+      for (let y = 0; y < gridHeight; y++) {
+        for (let x = 0; x < gridWidth; x++) {
+          if (world[y][x] === 1) {
+            ctx.fillStyle = '#D2042D';  // Red
+          } else if (world[y][x] === 2) {
+            ctx.fillStyle = '#F15025';  // Orange
+          } else if (world[y][x] === 3) {
+            ctx.fillStyle = '#ECCE8E';  // Yellow
+          } else if (world[y][x] === 4) {
+            ctx.fillStyle = '#228B22';  // Green
+          } else if (world[y][x] === 5) {
+            ctx.fillStyle = '#593C8F';  // Purple
+          } else if (world[y][x] === 6) {
+            ctx.fillStyle = '#808080';  // Gray
+          } else if (world[y][x] === 7) {
+            ctx.fillStyle = '#8B4513';  // Brown
+          } else {
+            ctx.fillStyle = '#87CEEB';  // Sky blue for air
+          }
+          ctx.fillRect(x * gridSize, y * gridSize, gridSize, gridSize);
+          ctx.strokeRect(x * gridSize, y * gridSize, gridSize, gridSize);  // Draw grid lines
+        }
+      }
+    }
+
+    // Add block-building mechanic with mouse click
+    canvas.addEventListener('click', function(event) {
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = event.clientX - rect.left;
+      const mouseY = event.clientY - rect.top;
+      
+      const blockX = Math.floor(mouseX / gridSize);
+      const blockY = Math.floor(mouseY / gridSize);
+
+      if (world[blockY][blockX] === 0) {
+        world[blockY][blockX] = currentBlockType;  // Place current block type
+      } else {
+        world[blockY][blockX] = 0;  // Remove the block (air)
+      }
+
+      renderWorld();
+    });
+
+    // Switch block types using keyboard (1 for dirt, 2 for grass, 3 for stone)
+    window.addEventListener('keydown', function(event) {
+      if (event.key === '1') {
+        currentBlockType = 1;  // Dirt
+      } else if (event.key === '2') {
+        currentBlockType = 2;  // Grass
+      } else if (event.key === '3') {
+        currentBlockType = 3;  // Stone
+      } else if (event.key === '4') {
+        currentBlockType = 4;  // Purple
+      } else if (event.key === '5') {
+        currentBlockType = 5;  // Yellow
+      } else if (event.key === '6') {
+        currentBlockType = 6;  // Orange
+      } else if (event.key === '7') {
+        currentBlockType = 7;  // Red
+      } else if (event.key === '8') {
+        currentBlockType = 8;  // Blue
+      }
+    });
+
+    // Initial render
+    renderWorld();
+  </script>
+</body>
+</html>
