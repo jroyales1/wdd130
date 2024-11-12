@@ -1,0 +1,63 @@
+body {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background-color: black;
+    font-family: 'Lucida Sans', Geneva, Verdana, sans-serif;
+}
+
+main {
+    grid-column: 2/3;
+    background-color: white;
+}
+
+img {
+    width: 100%;
+}
+
+.week {
+    text-align:center;
+    color:grey;
+    margin: 0px 50px;
+}
+
+.postthree {
+    position:relative;
+    top:-30px ;
+    text-align:center;
+    margin: 0px;
+    font-size: 27px;
+    font-weight: bold;
+}
+
+.text {
+    position:relative;
+    top: -30px;
+    text-align:center;
+    margin: 0px 50px;
+    color: grey;
+    line-height: 1.5em;
+    font-size: 18px;
+    font: 500;
+}
+
+.bottom {
+    font-weight: 200;
+}
+
+footer p {
+    text-align: center;
+    position: relative;
+    top: -15px;
+}
+
+footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    background-color: #6075a5;
+    color: white;
+    font-weight: normal;
+}
+
+footer h2 {
+    text-align: center;
+}
